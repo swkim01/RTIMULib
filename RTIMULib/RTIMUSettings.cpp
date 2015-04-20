@@ -221,6 +221,26 @@ bool RTIMUSettings::discoverIMU(int& imuType, bool& busIsI2C, unsigned char& sla
                 return true;
             }
         }
+
+        if (HALRead(L3G4200D_ADDRESS0, L3GD20_WHO_AM_I, 1, &result, "")) {
+            if (result == L3G4200D_ID) {
+                imuType = RTIMU_TYPE_GD20M303DLHC;
+                slaveAddress = L3G4200D_ADDRESS0;
+                busIsI2C = true;
+                HAL_INFO("Detected L3GD20 at standard address\n");
+                return true;
+            }
+        }
+
+        if (HALRead(L3G4200D_ADDRESS1, L3GD20_WHO_AM_I, 1, &result, "")) {
+            if (result == L3G4200D_ID) {
+                imuType = RTIMU_TYPE_GD20M303DLHC;
+                slaveAddress = L3G4200D_ADDRESS1;
+                busIsI2C = true;
+                HAL_INFO("Detected L3GD20 at option address\n");1
+                return true;
+            }
+        }
         HALClose();
     }
 

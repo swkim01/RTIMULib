@@ -78,7 +78,7 @@ bool RTIMUGD20M303DLHC::IMUInit()
     if (!m_settings->HALRead(m_gyroSlaveAddr, L3GD20_WHO_AM_I, 1, &result, "Failed to read L3GD20 id"))
         return false;
 
-    if (result != L3GD20_ID) {
+    if (result != L3GD20_ID && result != L3G4200D_ID) {
         HAL_ERROR1("Incorrect L3GD20 id %d\n", result);
         return false;
     }
