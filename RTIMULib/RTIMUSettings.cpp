@@ -237,7 +237,7 @@ bool RTIMUSettings::discoverIMU(int& imuType, bool& busIsI2C, unsigned char& sla
                 imuType = RTIMU_TYPE_GD20M303DLHC;
                 slaveAddress = L3G4200D_ADDRESS1;
                 busIsI2C = true;
-                HAL_INFO("Detected L3GD20 at option address\n");1
+                HAL_INFO("Detected L3GD20 at option address\n");
                 return true;
             }
         }
