@@ -608,7 +608,7 @@ bool RTIMUMPU9250::IMURead()
 
     RTMath::convertToVector(fifoData, m_imuData.accel, m_accelScale, true);
     RTMath::convertToVector(fifoData + 6, m_imuData.gyro, m_gyroScale, true);
-    RTMath::convertToVector(compassData + 1, m_imuData.compass, 0.6f, false);
+    RTMath::convertToVector(compassData, m_imuData.compass, 0.6f, false);
 
     //  sort out gyro axes
 

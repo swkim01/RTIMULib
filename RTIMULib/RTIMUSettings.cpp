@@ -28,6 +28,7 @@
 #include "RTIMUSettings.h"
 #include "IMUDrivers/RTIMUMPU9150.h"
 #include "IMUDrivers/RTIMUMPU9250.h"
+#include "IMUDrivers/RTIMUICM20948.h"
 #include "IMUDrivers/RTIMUGD20HM303D.h"
 #include "IMUDrivers/RTIMUGD20M303DLHC.h"
 #include "IMUDrivers/RTIMUGD20HM303DLHC.h"
@@ -105,6 +106,26 @@ bool RTIMUSettings::discoverIMU(int& imuType, bool& busIsI2C, unsigned char& sla
                 slaveAddress = MPU9150_ADDRESS1;
                 busIsI2C = true;
                 HAL_INFO("Detected MPU9150 at option address\n");
+                return true;
+            }
+        }
+
+        if (HALRead(ICM20948_ADDRESS0, ICM20948_WHO_AM_I, 1, &result, "")) {
+            if (result == ICM20948_ID) {
+                imuType = RTIMU_TYPE_ICM20948;
+                slaveAddress = ICM20948_ADDRESS0;
+                busIsI2C = true;
+                HAL_INFO("Detected ICM20948 at option address\n");
+                return true;
+            }
+        }
+
+        if (HALRead(ICM20948_ADDRESS1, ICM20948_WHO_AM_I, 1, &result, "")) {
+            if (result == ICM20948_ID) {
+                imuType = RTIMU_TYPE_ICM20948;
+                slaveAddress = ICM20948_ADDRESS1;
+                busIsI2C = true;
+                HAL_INFO("Detected ICM20948 at option address\n");
                 return true;
             }
         }
@@ -378,6 +399,16 @@ bool RTIMUSettings::discoverIMU(int& imuType, bool& busIsI2C, unsigned char& sla
                 return true;
             }
         }
+
+        if (HALRead(ICM20948_ADDRESS0, ICM20948_WHO_AM_I, 1, &result, "")) {
+            if (result == ICM20948_ID) {
+                imuType = RTIMU_TYPE_ICM20948;
+                slaveAddress = ICM20948_ADDRESS0;
+                busIsI2C = false;
+                HAL_INFO("Detected ICM20948 on SPI bus 0, select 0\n");
+                return true;
+            }
+        }
         HALClose();
     }
 
@@ -390,6 +421,15 @@ bool RTIMUSettings::discoverIMU(int& imuType, bool& busIsI2C, unsigned char& sla
                 slaveAddress = MPU9250_ADDRESS0;
                 busIsI2C = false;
                 HAL_INFO("Detected MPU9250 on SPI bus 0, select 1\n");
+                return true;
+            }
+        }
+        if (HALRead(ICM20948_ADDRESS0, ICM20948_WHO_AM_I, 1, &result, "")) {
+            if (result == ICM20948_ID) {
+                imuType = RTIMU_TYPE_ICM20948;
+                slaveAddress = ICM20948_ADDRESS0;
+                busIsI2C = false;
+                HAL_INFO("Detected ICM20948 on SPI bus 0, select 1\n");
                 return true;
             }
         }
@@ -532,6 +572,15 @@ void RTIMUSettings::setDefaults()
     m_MPU9250AccelLpf = MPU9250_ACCEL_LPF_41;
     m_MPU9250GyroFsr = MPU9250_GYROFSR_1000;
     m_MPU9250AccelFsr = MPU9250_ACCELFSR_8;
+
+    //  ICM20948 defaults
+
+    m_ICM20948GyroAccelSampleRate = 125;
+    m_ICM20948CompassSampleRate = 100;
+    m_ICM20948GyroLpf = ICM20948_GYRO_LPF_11;
+    m_ICM20948AccelLpf = ICM20948_ACCEL_LPF_10;
+    m_ICM20948GyroFsr = ICM20948_GYROFSR_250;
+    m_ICM20948AccelFsr = ICM20948_ACCELFSR_16;
 
     //  GD20HM303D defaults
 
