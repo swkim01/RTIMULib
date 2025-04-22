@@ -252,6 +252,10 @@
 #define L3GD20_ADDRESS1             0x6b
 #define L3GD20_ID                   0xd4
 
+#define L3G4200D_ADDRESS0           0x68
+#define L3G4200D_ADDRESS1           0x69
+#define L3G4200D_ID                 0xd3
+
 //  L3GD20 Register map
 
 #define L3GD20_WHO_AM_I        0x0f
