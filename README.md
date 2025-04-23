@@ -28,6 +28,7 @@ RTIMULib currently supports the following IMUs:
 * InvenSense MPU-6050 plus HMC5883 magnetometer on MPU-6050's aux bus (handled by the MPU-9150 driver).
 * InvenSense MPU-6050 gyros + acclerometers. Treated as MPU-9150 without magnetometers.
 * InvenSense MPU-9250 single chip IMU (I2C and SPI).
+* InvenSense ICM20948 single chip IMU (I2C and SPI).
 * STM LSM9DS0 single chip IMU.
 * STM LSM9DS1 single chip IMU.
 * L3GD20H + LSM303D (optionally with the LPS25H) as used on the Pololu AltIMU-10 v4.
